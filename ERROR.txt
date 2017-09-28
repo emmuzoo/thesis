@@ -7,6 +7,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sauce_appium_junit</name>
 	<description>Sample Appium tests using JUnit</description>
+	<properties>
+		<spring.version>3.1.2.RELEASE</spring.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
