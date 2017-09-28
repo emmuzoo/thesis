@@ -1,12 +1,6 @@
 AYUDA TETETS
 TETTS
 
-EDE
-
-
-DEDEWEDQ
-
-
-SXS
-
-XS
+<xml>
+	<NO CAMBIA>
+</xml>
