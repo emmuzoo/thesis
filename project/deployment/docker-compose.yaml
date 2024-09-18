@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mlflow:
+    #image: ghcr.io/mlflow/mlflow:v2.15.1 
+    #image: mlflow/mlflow:latest
+    #container_name: mlflow-server
+    build: ./mlflow
+    image: mlflow_server
+    container_name: mlflow_server
+    environment:
+      #MLFLOW_S3_ENDPOINT_URL: https://s3.amazonaws.com
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      MLFLOW_ARTIFACTS_BUCKET: ${MLFLOW_ARTIFACTS_BUCKET}
+    volumes:
+      - ./mlflow-data:/mlflow # Almacena el backend en SQLite en el host
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:///mlflow/mlflow.db
+      --default-artifact-root s3://${MLFLOW_ARTIFACTS_BUCKET}/artifacts/
+      --host 0.0.0.0
+      --port 5000
+    ports:
+      - "5001:5000"
+
+  sentiment-classifier:
+    image: sentiment-classifier:latest
+    container_name: sentiment-classifier
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      ARTIFACT_KEY: ${ARTIFACT_KEY}
+      EXPERIMENT_ID: ${EXPERIMENT_ID}
+      RUN_ID: ${RUN_ID}
+      VECTORIZER_KEY: ${VECTORIZER_KEY}
+    ports:
+      - "8080:5000"
+      - "8000:8000"
+    depends_on:
+      - mlflow

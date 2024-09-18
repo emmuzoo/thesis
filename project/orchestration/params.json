@@ -1,0 +1,15 @@
+{ 
+    "raw_dataset_path": "/workspaces/thesis/project/data/raw", 
+    "raw_dataset_year": "2015", 
+    "raw_dataset_start_month": "1", 
+    "raw_dataset_end_month": "3", 
+    "data_path": "/workspaces/thesis/project/data/output", 
+    "max_features": "500", 
+    "test_size": "0.2", 
+    "val_size": "0.1", 
+    "remote_server_uri": "http://127.0.0.1:5000", 
+    "hpo_experiment_name":  "sent-analisis-xgboost-hyperopt", 
+    "best_experiment_name": "sent-analisis-xgboost-best-models", 
+    "top_n": "5", 
+    "num_trials": "10" 
+}
